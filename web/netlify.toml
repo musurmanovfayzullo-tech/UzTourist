@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA fallback — barcha yo'llar index.html ga
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

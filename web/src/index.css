@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-midnight text-slate-100 font-body antialiased;
+  overscroll-behavior-y: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-silk/40 rounded-full;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.glass {
+  @apply backdrop-blur-xl bg-white/[0.06] border border-white/10;
+}
+.glass-gold {
+  @apply backdrop-blur-xl bg-midnight-surface/80 border border-neon/30;
+}
+.gold-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-silk-dark via-silk to-silk-light;
+}
+.gold-btn {
+  @apply bg-gradient-to-r from-silk-dark via-silk to-silk-light text-midnight font-extrabold shadow-gold transition-transform active:scale-95;
+}
+.blue-btn {
+  @apply bg-gradient-to-r from-registan to-registan-dark text-silk-light font-bold transition-transform active:scale-95;
+}
+.input-dark {
+  @apply w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none focus:border-neon/60 focus:ring-2 focus:ring-neon/20 transition;
+}
+.card {
+  @apply rounded-2xl glass shadow-glass;
+}
+.badge {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.leaflet-container {
+  background: #050b1a;
+  font-family: Inter, sans-serif;
+}
+.leaflet-control-attribution {
+  background: rgba(5, 11, 26, 0.7) !important;
+  color: #94a3b8 !important;
+  font-size: 9px !important;
+}
+.leaflet-control-attribution a {
+  color: #d4af37 !important;
+}

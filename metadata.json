@@ -1,0 +1,6 @@
+{
+  "name": "Uz Tourist",
+  "description": "Luxury travel guide for Uzbekistan featuring real-time WebSockets synchronization between tourist and admin apps, 3D interactive maps, AR historical vision, tour booking, and expense management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
