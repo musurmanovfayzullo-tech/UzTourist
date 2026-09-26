@@ -151,17 +151,18 @@ function extractJson(text: string): Record<string, unknown> | null {
 function matchFact(name: string, city: string): ArMonumentFact | null {
   const hay = `${name} ${city}`.toLowerCase()
   const keywords: Record<string, string[]> = {
-    ar_registan_sherdor: ['registan', 'registon', 'sherdor', 'sher-dor', 'tillakori', 'tillya', "ulug'bek", 'ulugh beg', 'samarkand', 'samarqand'],
-    ar_kalyan_minaret: ['kalyan', 'kalon', 'kalān', 'minorai kalon', 'poi kalyan', 'bukhara', 'buxoro'],
-    ar_kalta_minor: ['kalta', 'ichan', 'itcha', 'khiva', 'xiva', 'horezm', 'xorazm'],
-    ar_gur_amir: ['gur', 'gur-e-amir', "go'ri", 'guri amir', 'tamerlane', 'temur maqbara', 'timur mausoleum'],
-    ar_ark_bukhara: ['ark', 'ark fortress', 'ark qal', 'citadel'],
+    ar_registan_sherdor: ['registan', 'registon', 'sherdor', 'sher-dor', 'tillakori', 'tillya', "ulug'bek", 'ulugh beg'],
+    ar_kalyan_minaret: ['kalyan', 'kalon', 'kalān', 'minorai kalon', 'poi kalyan', 'poyi kalon'],
+    ar_kalta_minor: ['kalta', 'ichan qal', 'itcha', 'khiva', 'xiva', 'horezm', 'xorazm'],
+    ar_gur_amir: ['gur-e-amir', 'gur amir', 'guri amir', "go'ri amir", 'tamerlane', 'temur maqbara', 'timur mausoleum'],
+    ar_ark_bukhara: ['ark fortress', 'ark qal', 'ark citadel', 'arx', 'buxoro arki'],
   }
+  const hit = (k: string) => new RegExp(`\\b${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(hay)
   let best: ArMonumentFact | null = null
   let bestScore = 0
   for (const f of AR_FACTS) {
     const kws = keywords[f.id] ?? []
-    const score = kws.reduce((acc, k) => acc + (hay.includes(k) ? 1 : 0), 0)
+    const score = kws.reduce((acc, k) => acc + (hit(k) ? 1 : 0), 0)
     if (score > bestScore) {
       bestScore = score
       best = f

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { ArrowLeft, Play, Pause, Music, Headphones, Loader2 } from 'lucide-react'
+import { ArrowLeft, Play, Pause, Headphones, Loader2 } from 'lucide-react'
 import { useAppStore, useT } from '../store/appStore'
-import { AUDIO_TOURS, AMBIENT_TRACKS } from '../data/audio'
+import { AUDIO_TOURS } from '../data/audio'
 import { speak, stopSpeaking, isSpeaking } from '../services/speech'
 import { translateText } from '../services/gemini'
 
@@ -106,20 +106,6 @@ export default function AudioTourScreen() {
           </div>
           )
         })}
-      </div>
-
-      <h2 className="mt-7 flex items-center gap-2 text-sm font-semibold text-slate-200"><Music size={16} className="text-violet-400" /> {t('audio_ambient')}</h2>
-      <div className="mt-3 space-y-2">
-        {AMBIENT_TRACKS.map((m) => (
-          <div key={m.id} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3.5">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/20 text-violet-300"><Music size={18} /></span>
-            <div className="flex-1">
-              <p className="text-xs font-semibold">{m.title}</p>
-              <p className="text-[10px] text-slate-400">{m.instrument} • {m.mood}</p>
-            </div>
-            <span className="text-[10px] text-slate-500">{m.duration}</span>
-          </div>
-        ))}
       </div>
     </div>
   )

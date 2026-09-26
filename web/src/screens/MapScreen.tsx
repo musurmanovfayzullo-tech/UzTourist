@@ -7,11 +7,21 @@ import { getCurrentPosition, watchPosition, clearWatch, distanceMeters, type Geo
 import { fetchRoute, formatDuration, externalNavUrl, type RouteResult } from '../services/routing'
 
 const TILES = {
-  street: { url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '&copy; OpenStreetMap' },
+  street: {
+    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+  },
   satellite: {
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     attribution: '&copy; Esri',
   },
+}
+
+function pinIcon(active: boolean): L.DivIcon {
+  const color = active ? '#e11d48' : '#d97706'
+  const size = active ? 38 : 32
+  const html = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,.45))"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z" fill="${color}" stroke="#fff" stroke-width="1.4"/><circle cx="12" cy="9" r="2.8" fill="#fff"/></svg>`
+  return L.divIcon({ className: '', html, iconSize: [size, size], iconAnchor: [size / 2, size - 1] })
 }
 
 const UZ_BOUNDS = L.latLngBounds([37.1, 55.9], [45.6, 73.2])
@@ -80,12 +90,7 @@ export default function MapScreen() {
     group.clearLayers()
     destinations.forEach((d) => {
       const active = d.id === selected
-      const icon = L.divIcon({
-        className: '',
-        html: `<div style="background:${active ? '#ef4444' : '#f59e0b'};border:3px solid #fff;border-radius:50%;width:${active ? 40 : 34}px;height:${active ? 40 : 34}px;display:flex;align-items:center;justify-content:center;font-size:${active ? 19 : 16}px;box-shadow:0 2px 10px rgba(0,0,0,.55);transition:all .15s">🕌</div>`,
-        iconSize: [active ? 40 : 34, active ? 40 : 34],
-        iconAnchor: [active ? 20 : 17, active ? 20 : 17],
-      })
+      const icon = pinIcon(active)
       const m = L.marker(d.coordinates, { icon, title: d.title }).addTo(group)
       m.bindTooltip(localizedTitle(d, lang), { direction: 'top', offset: [0, -18], opacity: 0.95 })
       m.on('click', () => {
